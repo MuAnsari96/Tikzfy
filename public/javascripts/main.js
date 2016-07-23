@@ -9,6 +9,28 @@ var redraw = function() {
     }
 };
 
+var generateLatex = function() {
+    var latex = $("#Latex");
+    if (latex[0].lastChild){
+        latex[0].removeChild(latex[0].lastChild);
+    }
+    
+    console.log("Generating------ ");
+    var gen = "";
+    gen += "<p>"
+    gen += "\\documentclass[12pt]{article}<br>";
+    gen += "\\usepackage{tikz}<br>";
+    gen += "\\begin{document}<br>";
+    gen += "\\begin{center}<br>";
+    gen += "\\begin{tikzpicture}[scale=0.4])<br><br>";
+    for (var el of elements) {
+        gen += el.toLatex() + "<br>";
+    }
+    gen += "<br>\\end{tikzpicture}\n<br>";
+    gen += "\\end{center}\n<br>";
+    gen += "\\end{document}<br>";
+    latex.append($(gen));
+}; 
 
 var Drawable = function(id, x, y) {
     this.id = id;
@@ -18,6 +40,10 @@ var Drawable = function(id, x, y) {
 
 Drawable.prototype.draw = function() {
     console.log("Drawing an abstract drawable-- Not Great!")
+};
+
+Drawable.prototype.toLatex = function() {
+    console.log("Latexing an abstract drawable");
 };
 
 Drawable.prototype.erase = function() {
@@ -65,7 +91,12 @@ Circle.prototype.erase = function() {
     var r = this.radius + 5;
     canvas.clearRect(this.x - r, this.y - r, 2*r, 2*r);
     redraw();
-}
+};
+
+Circle.prototype.toLatex = function() {
+    return "\\draw [black] (" + this.x/20 + ", -" + this.y/20 + ") circle (1.5);";
+};
+
 function canvasPosition(event) {
     var x = event.pageX - canvas.canvas.offsetLeft;
     var y = event.pageY - canvas.canvas.offsetTop;
@@ -81,14 +112,18 @@ function canvasPosition(event) {
             for (var el of elements) {
                if (el.contains(coord[0], coord[1])){
                    elements.delete(el);
-                   el.erase();
+                   redraw();
                    return;
                }
             }
             var c = new Circle((new Date).getTime(), coord[0], coord[1], 30);
             c.draw();
             elements.add(c);
-            console.log("Just created ", c.id);
+        });
+
+        $("#GenLatexButton").click(function(e) {
+            generateLatex();
         });
     });
 })(jQuery);
+

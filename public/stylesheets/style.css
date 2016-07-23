@@ -20,7 +20,10 @@ h2 {
 #diagram {
     width: 60%;
     height: 700px;
-    margin: auto;
+    margin: 0 1% 0 1%;
+    float:left;
+    margin-bottom: 10px;
+    display: inline-block;
 }
 
 canvas {
@@ -29,4 +32,31 @@ canvas {
     border-radius: 10px;
 }
 
+#GenLatexButton {
+    width: 60.5%;
+    margin: 10px 1% 0 1%;
+    float: left;
+    background-color: #783333;
+    height: 20px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+}
 
+#Latex {
+    width: 35%;
+    height: 730px;
+    margin: 0 1% 0 1%;
+    padding: 5px 0 0 7px;
+    border-radius: 10px;
+    background-color: #e8e8e8;
+    color: #232323;
+    float: right;
+    display: inline-block;
+
+}
+
+#Latex p {
+    font: 12px "Open Sans", sans-serif;
+    margin: 1px 0 0 0;
+}
